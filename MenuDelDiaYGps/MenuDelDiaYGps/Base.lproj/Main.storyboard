@@ -10,6 +10,64 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Descripcion Platillo-->
+        <scene sceneID="Ora-Gr-Aje">
+            <objects>
+                <viewController id="yWw-Rw-kiQ" customClass="DescripcionPlatillo" customModule="MenuDelDiaYGps" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="2d1-sK-0K9"/>
+                        <viewControllerLayoutGuide type="bottom" id="Wmo-8b-FNY"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="gvK-Yg-h0P">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Descripción del platillo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sEi-TB-xXQ">
+                                <rect key="frame" x="101" y="12" width="173" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="3f6e7f04-1397-44dd-a8b0-00facefb003e" translatesAutoresizingMaskIntoConstraints="NO" id="u56-kv-BHq">
+                                <rect key="frame" x="16" y="41" width="343" height="271"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Delicioso sandwich con queso gratinado, jamón fresco y pan asado." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="uIA-Lr-KPl">
+                                <rect key="frame" x="16" y="361" width="343" height="65"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ouK-yp-WHv">
+                                <rect key="frame" x="151" y="579" width="73" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="¡Lo quiero!"/>
+                            </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="h4L-i9-nmY">
+                                <rect key="frame" x="16" y="452" width="343" height="119"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="$ 45" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9o7-wz-mIX">
+                                <rect key="frame" x="169" y="423" width="36" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="Extras" destination="h4L-i9-nmY" id="0eZ-bn-bRy"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3E0-LL-rhB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="68" y="-573.46326836581716"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -94,84 +152,35 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="how-to-make-chilaquiles-recipe" translatesAutoresizingMaskIntoConstraints="NO" id="QV8-8R-SEo">
-                                <rect key="frame" x="16" y="98" width="343" height="174"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="174" id="fhg-WV-bTy"/>
-                                </constraints>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chilaquiles" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d8c-ix-ABa">
-                                <rect key="frame" x="146" y="299" width="84" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chilaquiles en salsa verde con cebolla y queso" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uty-b9-WOH">
-                                <rect key="frame" x="77" y="339" width="220" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JDs-5s-v9Y">
-                                <rect key="frame" x="130" y="419" width="114" height="30"/>
-                                <state key="normal" title="Sin cebolla"/>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OmA-qI-mzX">
-                                <rect key="frame" x="130" y="475" width="114" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="114" id="sZE-AJ-sga"/>
-                                </constraints>
-                                <state key="normal" title="Sin queso"/>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fbv-iK-4h1">
-                                <rect key="frame" x="34" y="546" width="145" height="30"/>
-                                <state key="normal" title="Agregar Agua del Día"/>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$15" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FXx-qN-sKC">
-                                <rect key="frame" x="317" y="551" width="29" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MeX-Dg-Kue">
-                                <rect key="frame" x="155" y="617" width="64" height="30"/>
-                                <state key="normal" title="Siguiente"/>
-                                <connections>
-                                    <segue destination="4DZ-oo-Oqb" kind="show" id="iB2-gK-zpf"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tu pedido" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T6Q-g1-My6">
                                 <rect key="frame" x="150" y="28" width="76" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="tfK-UZ-ZZE">
+                                <rect key="frame" x="16" y="68" width="343" height="349"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <string key="text">- Chilaquiles                                                 50            - Sandwich con queso gratinado               45            -Agua del día                                                15</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MeX-Dg-Kue">
+                                <rect key="frame" x="156" y="447" width="64" height="30"/>
+                                <state key="normal" title="Siguiente"/>
+                                <connections>
+                                    <segue destination="4DZ-oo-Oqb" kind="show" id="iB2-gK-zpf"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="d8c-ix-ABa" firstAttribute="top" secondItem="QV8-8R-SEo" secondAttribute="bottom" constant="27" id="0C6-TQ-XNT"/>
                             <constraint firstItem="MeX-Dg-Kue" firstAttribute="leading" secondItem="e76-qz-U2m" secondAttribute="leadingMargin" constant="139" id="0Mt-Qc-bcD"/>
-                            <constraint firstItem="OmA-qI-mzX" firstAttribute="centerX" secondItem="Uty-b9-WOH" secondAttribute="centerX" id="1GX-Iy-EFY"/>
-                            <constraint firstItem="FXx-qN-sKC" firstAttribute="leading" secondItem="fbv-iK-4h1" secondAttribute="trailing" constant="138" id="1Jv-eP-3lx"/>
                             <constraint firstAttribute="trailingMargin" secondItem="MeX-Dg-Kue" secondAttribute="trailing" constant="140" id="3JJ-NM-nIq"/>
-                            <constraint firstItem="FXx-qN-sKC" firstAttribute="top" secondItem="OmA-qI-mzX" secondAttribute="bottom" constant="46" id="4bW-Lg-5WJ"/>
                             <constraint firstItem="wv5-gk-jL8" firstAttribute="top" secondItem="MeX-Dg-Kue" secondAttribute="bottom" constant="20" id="67z-Xp-pF7"/>
-                            <constraint firstAttribute="bottom" secondItem="OmA-qI-mzX" secondAttribute="bottom" constant="162" id="8PT-9P-590"/>
-                            <constraint firstItem="QV8-8R-SEo" firstAttribute="top" secondItem="T6Q-g1-My6" secondAttribute="bottom" constant="49" id="BVz-2F-Emx"/>
                             <constraint firstItem="T6Q-g1-My6" firstAttribute="leading" secondItem="e76-qz-U2m" secondAttribute="leadingMargin" constant="134" id="D0M-0x-4G1"/>
-                            <constraint firstItem="QV8-8R-SEo" firstAttribute="trailing" secondItem="e76-qz-U2m" secondAttribute="trailingMargin" id="Ebw-uk-FnA"/>
-                            <constraint firstItem="Uty-b9-WOH" firstAttribute="top" secondItem="d8c-ix-ABa" secondAttribute="bottom" constant="19" id="GtS-e1-Ozv"/>
-                            <constraint firstItem="Uty-b9-WOH" firstAttribute="leading" secondItem="e76-qz-U2m" secondAttribute="leadingMargin" constant="61" id="HlK-JC-OLe"/>
-                            <constraint firstItem="OmA-qI-mzX" firstAttribute="trailing" secondItem="JDs-5s-v9Y" secondAttribute="trailing" id="RC6-pW-iDH"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="FXx-qN-sKC" secondAttribute="trailing" constant="13" id="S3o-gn-8Nm"/>
-                            <constraint firstItem="OmA-qI-mzX" firstAttribute="top" secondItem="JDs-5s-v9Y" secondAttribute="bottom" constant="26" id="TwW-Es-QRt"/>
-                            <constraint firstItem="fbv-iK-4h1" firstAttribute="top" secondItem="OmA-qI-mzX" secondAttribute="bottom" constant="41" id="aGL-zq-l2r"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Uty-b9-WOH" secondAttribute="trailing" constant="62" id="ezm-yK-IkZ"/>
-                            <constraint firstItem="d8c-ix-ABa" firstAttribute="leading" secondItem="e76-qz-U2m" secondAttribute="leadingMargin" constant="130" id="fPz-Og-tQc"/>
-                            <constraint firstItem="fbv-iK-4h1" firstAttribute="leading" secondItem="e76-qz-U2m" secondAttribute="leadingMargin" constant="18" id="n9Q-42-WGE"/>
                             <constraint firstItem="T6Q-g1-My6" firstAttribute="top" secondItem="qzR-Rx-m01" secondAttribute="bottom" constant="8" id="qMA-uH-PF9"/>
-                            <constraint firstItem="OmA-qI-mzX" firstAttribute="leading" secondItem="JDs-5s-v9Y" secondAttribute="leading" id="ydH-Ip-2s6"/>
-                            <constraint firstItem="QV8-8R-SEo" firstAttribute="leading" secondItem="e76-qz-U2m" secondAttribute="leadingMargin" id="zF1-Xe-FBt"/>
                         </constraints>
                     </view>
                 </viewController>
