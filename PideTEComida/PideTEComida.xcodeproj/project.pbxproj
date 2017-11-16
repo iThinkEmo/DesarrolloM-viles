@@ -8,21 +8,27 @@
 
 /* Begin PBXBuildFile section */
 		2D5570D9C90D5EBF97CD0EF7 /* Pods_PideTEComida.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A7B9B92FD31E004099B81BA /* Pods_PideTEComida.framework */; };
+		D94065CE1FBDE743003B77D3 /* PantallaOrdenes.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94065CD1FBDE743003B77D3 /* PantallaOrdenes.swift */; };
 		D95DC17B1FA1484B00671EC4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95DC17A1FA1484B00671EC4 /* AppDelegate.swift */; };
 		D95DC1801FA1484B00671EC4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D95DC17E1FA1484B00671EC4 /* Main.storyboard */; };
 		D95DC1821FA1484B00671EC4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D95DC1811FA1484B00671EC4 /* Assets.xcassets */; };
 		D95DC1851FA1484B00671EC4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D95DC1831FA1484B00671EC4 /* LaunchScreen.storyboard */; };
 		D95DC1911FA14EB100671EC4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D95DC1901FA14EB100671EC4 /* GoogleService-Info.plist */; };
-		D95DC1951FA1928400671EC4 /* PantallaMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95DC1941FA1928400671EC4 /* PantallaMenu.swift */; };
 		D95DC1971FA1A19800671EC4 /* PantallaMapa.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95DC1961FA1A19800671EC4 /* PantallaMapa.swift */; };
 		D95DC19B1FA1B73200671EC4 /* VeroRide.gpx in Resources */ = {isa = PBXBuildFile; fileRef = D95DC19A1FA1B73200671EC4 /* VeroRide.gpx */; };
-		D95DC19D1FA22C1A00671EC4 /* PantallaPlatillo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95DC19C1FA22C1A00671EC4 /* PantallaPlatillo.swift */; };
-		D95DC19F1FA231B200671EC4 /* infoComida.json in Resources */ = {isa = PBXBuildFile; fileRef = D95DC19E1FA231B200671EC4 /* infoComida.json */; };
+		D96A5BA71FA6E1C300CE8AA5 /* PantallaMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96A5BA61FA6E1C300CE8AA5 /* PantallaMenu.swift */; };
+		D96A5BA91FA6E59C00CE8AA5 /* myCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96A5BA81FA6E59C00CE8AA5 /* myCell.swift */; };
+		D9D965141FBC02B4003A4FF0 /* PantallaAdmin.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9D965131FBC02B4003A4FF0 /* PantallaAdmin.swift */; };
+		D9F6A0681FA6F9B90055405E /* PantallaPlatillo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F6A0671FA6F9B90055405E /* PantallaPlatillo.swift */; };
+		D9F6A07A1FABAFE00055405E /* comidaBD.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F6A0791FABAFE00055405E /* comidaBD.swift */; };
+		D9F6A07C1FABB2D20055405E /* bridge.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F6A07B1FABB2D20055405E /* bridge.m */; };
+		D9FB697B1FABD93F002AB3EF /* PantallaPedido.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9FB697A1FABD93F002AB3EF /* PantallaPedido.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1DFEF869A32B6232E5AD4CEE /* Pods-PideTEComida.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PideTEComida.release.xcconfig"; path = "Pods/Target Support Files/Pods-PideTEComida/Pods-PideTEComida.release.xcconfig"; sourceTree = "<group>"; };
 		2A7B9B92FD31E004099B81BA /* Pods_PideTEComida.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PideTEComida.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D94065CD1FBDE743003B77D3 /* PantallaOrdenes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PantallaOrdenes.swift; sourceTree = "<group>"; };
 		D95DC1771FA1484B00671EC4 /* PideTEComida.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PideTEComida.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D95DC17A1FA1484B00671EC4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D95DC17F1FA1484B00671EC4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -30,11 +36,16 @@
 		D95DC1841FA1484B00671EC4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D95DC1861FA1484B00671EC4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D95DC1901FA14EB100671EC4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		D95DC1941FA1928400671EC4 /* PantallaMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PantallaMenu.swift; sourceTree = "<group>"; };
 		D95DC1961FA1A19800671EC4 /* PantallaMapa.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PantallaMapa.swift; sourceTree = "<group>"; };
 		D95DC19A1FA1B73200671EC4 /* VeroRide.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = VeroRide.gpx; sourceTree = "<group>"; };
-		D95DC19C1FA22C1A00671EC4 /* PantallaPlatillo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PantallaPlatillo.swift; sourceTree = "<group>"; };
-		D95DC19E1FA231B200671EC4 /* infoComida.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = infoComida.json; sourceTree = "<group>"; };
+		D96A5BA61FA6E1C300CE8AA5 /* PantallaMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PantallaMenu.swift; sourceTree = "<group>"; };
+		D96A5BA81FA6E59C00CE8AA5 /* myCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myCell.swift; sourceTree = "<group>"; };
+		D9D965131FBC02B4003A4FF0 /* PantallaAdmin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PantallaAdmin.swift; sourceTree = "<group>"; };
+		D9F6A0671FA6F9B90055405E /* PantallaPlatillo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PantallaPlatillo.swift; sourceTree = "<group>"; };
+		D9F6A0791FABAFE00055405E /* comidaBD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = comidaBD.swift; sourceTree = "<group>"; };
+		D9F6A07B1FABB2D20055405E /* bridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = bridge.m; sourceTree = "<group>"; };
+		D9F6A07D1FABB2F50055405E /* PideTEComida-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PideTEComida-Bridging-Header.h"; sourceTree = "<group>"; };
+		D9FB697A1FABD93F002AB3EF /* PantallaPedido.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PantallaPedido.swift; sourceTree = "<group>"; };
 		DE3C03DE8B8FECFF0FFBFB6F /* Pods-PideTEComida.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PideTEComida.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PideTEComida/Pods-PideTEComida.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -70,8 +81,9 @@
 		D95DC16E1FA1484A00671EC4 = {
 			isa = PBXGroup;
 			children = (
-				D95DC19E1FA231B200671EC4 /* infoComida.json */,
 				D95DC19A1FA1B73200671EC4 /* VeroRide.gpx */,
+				D9F6A07D1FABB2F50055405E /* PideTEComida-Bridging-Header.h */,
+				D9F6A07B1FABB2D20055405E /* bridge.m */,
 				D95DC1791FA1484B00671EC4 /* PideTEComida */,
 				D95DC1781FA1484B00671EC4 /* Products */,
 				4BDD6D3869C667CF42310D01 /* Pods */,
@@ -96,9 +108,14 @@
 				D95DC1811FA1484B00671EC4 /* Assets.xcassets */,
 				D95DC1831FA1484B00671EC4 /* LaunchScreen.storyboard */,
 				D95DC1861FA1484B00671EC4 /* Info.plist */,
-				D95DC1941FA1928400671EC4 /* PantallaMenu.swift */,
 				D95DC1961FA1A19800671EC4 /* PantallaMapa.swift */,
-				D95DC19C1FA22C1A00671EC4 /* PantallaPlatillo.swift */,
+				D96A5BA61FA6E1C300CE8AA5 /* PantallaMenu.swift */,
+				D96A5BA81FA6E59C00CE8AA5 /* myCell.swift */,
+				D9F6A0671FA6F9B90055405E /* PantallaPlatillo.swift */,
+				D9F6A0791FABAFE00055405E /* comidaBD.swift */,
+				D9FB697A1FABD93F002AB3EF /* PantallaPedido.swift */,
+				D9D965131FBC02B4003A4FF0 /* PantallaAdmin.swift */,
+				D94065CD1FBDE743003B77D3 /* PantallaOrdenes.swift */,
 			);
 			path = PideTEComida;
 			sourceTree = "<group>";
@@ -138,6 +155,7 @@
 				TargetAttributes = {
 					D95DC1761FA1484B00671EC4 = {
 						CreatedOnToolsVersion = 9.0;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -168,7 +186,6 @@
 				D95DC1851FA1484B00671EC4 /* LaunchScreen.storyboard in Resources */,
 				D95DC1911FA14EB100671EC4 /* GoogleService-Info.plist in Resources */,
 				D95DC19B1FA1B73200671EC4 /* VeroRide.gpx in Resources */,
-				D95DC19F1FA231B200671EC4 /* infoComida.json in Resources */,
 				D95DC1821FA1484B00671EC4 /* Assets.xcassets in Resources */,
 				D95DC1801FA1484B00671EC4 /* Main.storyboard in Resources */,
 			);
@@ -244,10 +261,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D96A5BA71FA6E1C300CE8AA5 /* PantallaMenu.swift in Sources */,
+				D94065CE1FBDE743003B77D3 /* PantallaOrdenes.swift in Sources */,
+				D9FB697B1FABD93F002AB3EF /* PantallaPedido.swift in Sources */,
+				D9F6A07C1FABB2D20055405E /* bridge.m in Sources */,
 				D95DC1971FA1A19800671EC4 /* PantallaMapa.swift in Sources */,
 				D95DC17B1FA1484B00671EC4 /* AppDelegate.swift in Sources */,
-				D95DC1951FA1928400671EC4 /* PantallaMenu.swift in Sources */,
-				D95DC19D1FA22C1A00671EC4 /* PantallaPlatillo.swift in Sources */,
+				D9D965141FBC02B4003A4FF0 /* PantallaAdmin.swift in Sources */,
+				D96A5BA91FA6E59C00CE8AA5 /* myCell.swift in Sources */,
+				D9F6A0681FA6F9B90055405E /* PantallaPlatillo.swift in Sources */,
+				D9F6A07A1FABAFE00055405E /* comidaBD.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -385,12 +408,15 @@
 			baseConfigurationReference = DE3C03DE8B8FECFF0FFBFB6F /* Pods-PideTEComida.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6GKBX7MLG9;
 				INFOPLIST_FILE = PideTEComida/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.itesm.ithinkemo.PideTEComida;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "PideTEComida-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -401,12 +427,14 @@
 			baseConfigurationReference = 1DFEF869A32B6232E5AD4CEE /* Pods-PideTEComida.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6GKBX7MLG9;
 				INFOPLIST_FILE = PideTEComida/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.itesm.ithinkemo.PideTEComida;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "PideTEComida-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
