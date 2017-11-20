@@ -6,25 +6,19 @@
 //  Copyright © 2017 Aldo Reyna Gomez. All rights reserved.
 //
 import GoogleAPIClientForREST
-import GoogleSignIn
 import UIKit
 
-class PantallaAdmin: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, GIDSignInDelegate, GIDSignInUIDelegate {
+class PantallaAdmin: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    // If modifying these scopes, delete your previously saved credentials by
-    // resetting the iOS simulator or uninstall the app.
-    private let scopes = [kGTLRAuthScopeDrive]
-    //private let scopes = [kGTLRAuthScopeDriveReadonly]
-    
-    private let service = GTLRDriveService()
-    let signInButton = GIDSignInButton()
-    //let output = UITextView()
+    public var service: GTLRDriveService? = nil
     
     // Variables para el Objeto y Arreglo JSON
     var jsonObj = [String: Any]()
-    var jsonArr = [String: [String: String]]()
+    var jsonArr = [String: [String: Any]]()
     // Esta variable se modifica cuando encuentra un json en la carpeta y le asigna su id
     var jsonId = ""
+    // Número de arhivos .json dentro de la carpeta dada
+    var size : Int = 0
     
     // Outlets
     @IBOutlet weak var imgPlatillo: UIImageView!
@@ -73,24 +67,6 @@ class PantallaAdmin: UIViewController, UIImagePickerControllerDelegate, UINaviga
         picker.dismiss(animated: true, completion: nil)
     }
     
-    // MARK: - JSON Managment
-    
-    func JSONStringify(value: AnyObject,prettyPrinted:Bool = false) -> String {
-        let options = prettyPrinted ? JSONSerialization.WritingOptions.prettyPrinted : JSONSerialization.WritingOptions(rawValue: 0)
-        if JSONSerialization.isValidJSONObject(value) {
-            do {
-                let data = try JSONSerialization.data(withJSONObject: value, options: options)
-                subirJSON(data)
-                if let string = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
-                    return string as String
-                }
-            }
-            catch {
-                print("error")
-            }
-        }
-        return ""
-    }
     
     // MARK: Subir Platillo a Drive en formato JSON
     
@@ -112,6 +88,7 @@ class PantallaAdmin: UIViewController, UIImagePickerControllerDelegate, UINaviga
     
     // Sube la foto a Drive para obtener el ID
     func subir(_ img : UIImage) {
+        print(service!.authorizer!)
         let data = UIImagePNGRepresentation(img)!
         let folderId = "1Rtj5aRRBAl0kRg67NjqH3g9lghxLjGb3"
         
@@ -124,10 +101,10 @@ class PantallaAdmin: UIViewController, UIImagePickerControllerDelegate, UINaviga
         let query = GTLRDriveQuery_FilesCreate.query(withObject: metadata, uploadParameters: parametros)
         
         query.fields = "id"
-        self.service.executeQuery(query) { (ticket, file, error) in
+        self.service!.executeQuery(query) { (ticket, file, error) in
             self.aiEspera.stopAnimating()
-            let f = file as! GTLRDrive_File
             if error == nil {
+                let f = file as! GTLRDrive_File
                 print("Subió: \(f.identifier!)")
                 self.btnSubirPlatillo.isUserInteractionEnabled = true
                 self.createJSON(f)
@@ -146,42 +123,35 @@ class PantallaAdmin: UIViewController, UIImagePickerControllerDelegate, UINaviga
         tfDesc.text = ""
     }
     
+    // MARK: - JSON Managment
+    
     @IBAction func subirMenu(_ sender: Any) {
-        aiEspera.startAnimating()
-        let jsonStringPretty = JSONStringify(value: jsonObj as AnyObject, prettyPrinted: true)
-        print(jsonStringPretty)
-        showAlert(title: "Aviso", message: "Se subió el menú del día exitosamente.")
+        if jsonObj.isEmpty {
+            showAlert(title: "Alerta", message: "No has subido ningún platillo.")
+        }
+        else {
+            aiEspera.startAnimating()
+            let jsonStringPretty = JSONStringify(value: jsonObj as AnyObject, prettyPrinted: true)
+             print(jsonStringPretty)
+             showAlert(title: "Aviso", message: "Se subió el menú del día exitosamente.")
+        }
     }
     
-    func listFiles(_ id: String) -> Int {
-        let query = GTLRDriveQuery_FilesList.query()
-        query.pageSize = 20
-        query.q = "'\(id)' in parents"
-        service.shouldFetchNextPages = true
-        service.executeQuery(query,
-                             delegate: self,
-                             didFinish: #selector(displayResultWithTicket(ticket:finishedWithObject:error:)))
-        print(size)
-        return size
-    }
-    
-    // Número de arhivos .json dentro de la carpeta dada
-    var size : Int = 0
-    
-    @objc func displayResultWithTicket(ticket: GTLRServiceTicket,
-                                       finishedWithObject result : GTLRDrive_FileList,
-                                       error : NSError?) {
-        if let error = error {
-            showAlert(title: "Error", message: error.localizedDescription)
-            size = 0
+    func JSONStringify(value: AnyObject,prettyPrinted:Bool = false) -> String {
+        let options = prettyPrinted ? JSONSerialization.WritingOptions.prettyPrinted : JSONSerialization.WritingOptions(rawValue: 0)
+        if JSONSerialization.isValidJSONObject(value) {
+            do {
+                let data = try JSONSerialization.data(withJSONObject: value, options: options)
+                subirJSON(data)
+                if let string = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
+                    return string as String
+                }
+            }
+            catch {
+                print("error")
+            }
         }
-        if let files = result.files, !files.isEmpty {
-            jsonId = files[0].identifier!
-            size = 1
-        } else {
-            print ("No files found.")
-            size = 0
-        }
+        return ""
     }
     
     func subirJSON(_ json : Data) {
@@ -196,7 +166,7 @@ class PantallaAdmin: UIViewController, UIImagePickerControllerDelegate, UINaviga
             let query = GTLRDriveQuery_FilesCreate.query(withObject: metadata, uploadParameters: parametros)
             
             query.fields = "id"
-            self.service.executeQuery(query) { (ticket, file, error) in
+            self.service!.executeQuery(query) { (ticket, file, error) in
                 self.executedQuery(file, error)
             }
         }
@@ -205,7 +175,7 @@ class PantallaAdmin: UIViewController, UIImagePickerControllerDelegate, UINaviga
             let query = GTLRDriveQuery_FilesUpdate.query(withObject: metadata, fileId: fileId, uploadParameters: parametros)
             query.addParents = folderId
             query.fields = "id"
-            self.service.executeQuery(query) { (ticket, file, error) in
+            self.service!.executeQuery(query) { (ticket, file, error) in
                 self.executedQuery(file, error)
             }
         }
@@ -221,17 +191,37 @@ class PantallaAdmin: UIViewController, UIImagePickerControllerDelegate, UINaviga
         }
     }
     
+    
+    func listFiles(_ id: String) -> Int {
+        let query = GTLRDriveQuery_FilesList.query()
+        query.pageSize = 20
+        query.q = "'\(id)' in parents"
+        service!.shouldFetchNextPages = true
+        service!.executeQuery(query) { (ticket, result, error) in
+            let result = result as! GTLRDrive_FileList
+            if let error = error {
+                self.showAlert(title: "Error", message: error.localizedDescription)
+                self.size = 0
+            }
+            if let files = result.files, !files.isEmpty {
+                self.jsonId = files[0].identifier!
+                self.size = 1
+            } else {
+                print ("No files found.")
+                self.size = 0
+            }
+        }
+        print(size)
+        return size
+    }
+    
+
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(sender:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(sender:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-
-        // Configure Google Sign-in.
-        GIDSignIn.sharedInstance().delegate = self
-        GIDSignIn.sharedInstance().uiDelegate = self
-        GIDSignIn.sharedInstance().scopes = scopes
-        GIDSignIn.sharedInstance().signIn()
         aiEspera.stopAnimating()
     }
     
@@ -245,26 +235,7 @@ class PantallaAdmin: UIViewController, UIImagePickerControllerDelegate, UINaviga
     @objc func keyboardWillHide(sender: NSNotification) {
         self.view.frame.origin.y = 0 // Move view to original position
     }
-    
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!,
-              withError error: Error!) {
-        if let error = error {
-            showAlert(title: "Authentication Error", message: error.localizedDescription)
-            self.service.authorizer = nil
-        } else {
-            self.signInButton.isHidden = true
-            self.service.authorizer = user.authentication.fetcherAuthorizer()
-        }
-    }
-    
-    @objc func mostrarAlerta(_ mensaje: String) {
-        print("Alerta")
-        let alerta = UIAlertController(title: "Aviso", message: mensaje, preferredStyle: .alert)
-        let aceptar = UIAlertAction(title: "Aceptar", style: .default, handler: nil)
-        alerta.addAction(aceptar)
-        self.present(alerta, animated: true, completion: nil)
-    }
-    
+
     // Helper for showing an alert
     func showAlert(title : String, message: String) {
         let alert = UIAlertController(
@@ -280,9 +251,6 @@ class PantallaAdmin: UIViewController, UIImagePickerControllerDelegate, UINaviga
         alert.addAction(ok)
         present(alert, animated: true, completion: nil)
     }
-    
-    
-    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -300,22 +268,23 @@ class PantallaAdmin: UIViewController, UIImagePickerControllerDelegate, UINaviga
     @IBAction func verPedidos(_ sender: Any) {
         let fileId = "1dhF_MLdMQ9PIDbKvEHk6wZh_QUFhMxqS"
         let query = GTLRDriveQuery_FilesGet.queryForMedia(withFileId: fileId)
-        service.executeQuery(query) { (ticket, file, error) in
+        service!.executeQuery(query) { (ticket, file, error) in
             if error == nil {
                 let archivo = file as? GTLRDataObject
                 if let json = try? JSONSerialization.jsonObject(with: (archivo?.data)!, options: .mutableContainers) as! [String : Any] {
                     let items = json["items"]! as! [String : Any]
-                    //print(items)
                     for (key, element) in items {
                         let item = element as! NSDictionary
-                        let nombre = item["nombre"]
-                        print(nombre)
+                        let nombre = item["nombre"] as! String
                         let platillos = item["platillos"] as! NSArray
-                        let horario = item["horario"]
-                        let notas = item["notas"]
-                        print("platillos: \(platillos)")
+                        let horario = item["horario"] as! String
+                        let notas = item["notas"] as! String
+                        self.jsonArr[key] = ["nombre": nombre, "platillos": platillos, "horario": horario, "notas": notas]
                     }
+                    self.jsonObj["items"] = self.jsonArr
+                    print(self.jsonObj)
                 }
+                self.performSegue(withIdentifier: "seguePedidos", sender: self)
             }
             else {
                 print("*** Error: \(error.debugDescription)")
@@ -324,9 +293,9 @@ class PantallaAdmin: UIViewController, UIImagePickerControllerDelegate, UINaviga
     }
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        /*let menuVC = segue.destination as! PantallaMenu
-        menuVC.signInButton.isHidden = false*/
-        
+        let orden = segue.destination as! PantallaOrdenes
+        orden.jsonObj = jsonObj
+        orden.service = service
     }
 
 }

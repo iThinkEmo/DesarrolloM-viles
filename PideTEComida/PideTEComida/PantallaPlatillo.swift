@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol MyProtocol {
+    func agregarPlatillo(platillo: String, precio: String, codigo: String)
+}
+
 class PantallaPlatillo: UIViewController, UINavigationControllerDelegate {
     
     var descripcion : String?
@@ -15,23 +19,23 @@ class PantallaPlatillo: UIViewController, UINavigationControllerDelegate {
     var codigo : String?
     var costo  : String?
     var imagen : UIImage?
+    var myProtocol : MyProtocol?
     
     // Variables para el Objeto y Arreglo JSON
     var jsonObj = [String: Any]()
     var jsonArr = [String]()
 
-    @IBOutlet weak var tfDescripcion: UITextView!
+
+    @IBOutlet weak var tvDescripcion: UITextView!
     @IBOutlet weak var lbTitulo: UILabel!
     @IBOutlet weak var imgPlatillo: UIImageView!
     @IBOutlet weak var btnAgregar: UIButton!
-    
-    // Variable que hace regerencia al modelo
-    let modeloBD = comidaBD()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.delegate = self
-        tfDescripcion.text = descripcion!
+        tvDescripcion.text = descripcion!
         lbTitulo.text = titulo!
         imgPlatillo.image = imagen!
         btnAgregar.setTitle("Agregar a mi pedido   $\(costo ?? "0").00", for: .normal)
@@ -46,17 +50,29 @@ class PantallaPlatillo: UIViewController, UINavigationControllerDelegate {
     
     
     @IBAction func agregarPlatillo(_ sender: Any) {
-        let alert = UIAlertController(title: "  ", message: "Este platillo se agregó a tu orden.", preferredStyle: .alert)
-        let accept = UIAlertAction(title: "Continuar", style: .default){
-            (alerta) in print("cerrar")}
-        alert.addAction(accept)
+        showAlert(title: "Aviso", message: "Este platillo se agregó a tu orden.")
+        let currencyFormatter = NumberFormatter()
+        currencyFormatter.usesGroupingSeparator = true
+        currencyFormatter.numberStyle = NumberFormatter.Style.currencyAccounting
+        currencyFormatter.locale = NSLocale.current
+        let priceString = currencyFormatter.string(from: Double(costo!+".00")! as NSNumber)
+        myProtocol?.agregarPlatillo(platillo: titulo!, precio: priceString!, codigo: codigo!)
+    }
+    
+    // Helper for showing an alert
+    func showAlert(title : String, message: String) {
+        let alert = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: UIAlertControllerStyle.alert
+        )
+        let ok = UIAlertAction(
+            title: "OK",
+            style: UIAlertActionStyle.default,
+            handler: nil
+        )
+        alert.addAction(ok)
         present(alert, animated: true, completion: nil)
-        /*modeloBD.abrirBaseDatos()
-        modeloBD.crearTabla()
-        modeloBD.id = codigo
-        modeloBD.comida = titulo
-        modeloBD.costo = 14
-        modeloBD.insertarDatos()*/
     }
     
 
@@ -64,22 +80,6 @@ class PantallaPlatillo: UIViewController, UINavigationControllerDelegate {
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    
-    override func willMove(toParentViewController parent: UIViewController?) {
-        if (parent == nil) {
-            print("Back Button Pressed x2!")
-            let menu = parent as? PantallaMenu
-            menu?.jsonArr.append(titulo!)
-            print(menu?.jsonArr)
-        }
-    }
-    
-    override func didMove(toParentViewController parent: UIViewController?) {
-        if (parent == nil) {
-            print("Back Button Pressed!")
-            
-        }
-    }
  
 
 }

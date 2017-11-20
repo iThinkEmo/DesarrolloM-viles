@@ -7,66 +7,29 @@
 //
 
 import GoogleAPIClientForREST
-import GoogleSignIn
 import UIKit
 
-class PantallaMenu: UICollectionViewController, GIDSignInDelegate, GIDSignInUIDelegate {
+class PantallaMenu: UICollectionViewController, MyProtocol {
+
+    public var service: GTLRDriveService? = nil
+    var nombre: String = ""
     
     @IBOutlet weak var myCollectionView: UICollectionView!
-    let modeloBD = comidaBD()
-    var baseDatos: OpaquePointer? = nil
     
     var fileIdArr: [String]? = [String]()
     var imgArr: [UIImage]? = [UIImage]()
     var selectedRow: Int? = 0
     var selectedImg: UIImage? = UIImage()
-    public var pedidoArr: [String]? = [String]()
     var archivoMenu : GTLRDataObject? = nil
     
     // Variables para el Objeto y Arreglo JSON
     public var jsonObj = [String: Any]()
-    public var jsonArr = [String]()
+    public var platillos = [String]()
+    public var costos = [String]()
+    public var codigos = [String]()
     
     @IBOutlet weak var aiEspera: UIActivityIndicatorView!
-    
-    // MARK: - Google Sign In
-    
-    // If modifying these scopes, delete your previously saved credentials by
-    // resetting the iOS simulator or uninstall the app.
-    private let scopes = [kGTLRAuthScopeDriveReadonly]
-    
-    @IBOutlet weak var signInButton: GIDSignInButton! = GIDSignInButton()
-    private let service = GTLRDriveService()
-    //let signInButton = GIDSignInButton()
-    let output = UITextView()
-    
-    @IBAction func signInWithGoogle(_ sender: UIButton) {
-        GIDSignIn.sharedInstance().delegate = self
-        GIDSignIn.sharedInstance().uiDelegate = self
-        GIDSignIn.sharedInstance().scopes = scopes
-        GIDSignIn.sharedInstance().signIn()
-        //sender.isHidden = true
-    }
-    
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!,
-              withError error: Error!) {
-        if let error = error {
-            showAlert(title: "Authentication Error", message: error.localizedDescription)
-            self.service.authorizer = nil
-        } else {
-            let email = user.profile.email
-            print(email ?? "No tiene correo")
-            if (email == "a01169073@itesm.mx") {
-                performSegue(withIdentifier: "segueAdmin", sender: self)
-            }
-            else {
-                self.signInButton.isHidden = true
-                self.service.authorizer = user.authentication.fetcherAuthorizer()
-                aiEspera.startAnimating()
-                listFiles()
-            }
-        }
-    }
+
     
     // List up to 20 files in Drive
     func listFiles() {
@@ -74,43 +37,36 @@ class PantallaMenu: UICollectionViewController, GIDSignInDelegate, GIDSignInUIDe
         query.pageSize = 20
         query.q = "'1Sz9T4HX2j-Z3DYoUOuiQyNalkcxJxOJN' in parents"
         query.orderBy = "modifiedTime desc"
-        service.shouldFetchNextPages = true
-        service.executeQuery(query,
-                             delegate: self,
-                             didFinish: #selector(displayResultWithTicket(ticket:finishedWithObject:error:)))
-    }
-    
-    @objc func displayResultWithTicket(ticket: GTLRServiceTicket,
-                                       finishedWithObject result : GTLRDrive_FileList,
-                                       error : NSError?) {
-        if let error = error {
-            showAlert(title: "Error", message: error.localizedDescription)
-            return
-        }
-        if let files = result.files, !files.isEmpty {
-            let fileId = files[0].identifier
-            let query = GTLRDriveQuery_FilesGet.queryForMedia(withFileId: fileId!)
-            service.executeQuery(query) { (ticket, file, error) in
-                if error == nil {
-                    self.archivoMenu = file as? GTLRDataObject
-                    if let json = try? JSONSerialization.jsonObject(with: (self.archivoMenu?.data)!, options: .mutableContainers) as! [String : Any]{
-                        let items = json["items"] as! NSDictionary
-                        let fileIds = items.allKeys
-                        print("Estas son las file ids")
-                        print(fileIds)
-                        self.fileIdArr = fileIds as? [String]
-                        print("File arr ", self.fileIdArr!)
-                        self.myCollectionView.reloadData()
+        service!.shouldFetchNextPages = true
+        service!.executeQuery(query) { (ticket, result, error) in
+            let result = result as! GTLRDrive_FileList
+            if let error = error {
+                self.showAlert(title: "Error", message: error.localizedDescription)
+                return
+            }
+            if let files = result.files, !files.isEmpty {
+                let fileId = files[0].identifier
+                let query = GTLRDriveQuery_FilesGet.queryForMedia(withFileId: fileId!)
+                self.service!.executeQuery(query) { (ticket, file, error) in
+                    if error == nil {
+                        self.archivoMenu = file as? GTLRDataObject
+                        if let json = try? JSONSerialization.jsonObject(with: (self.archivoMenu?.data)!, options: .mutableContainers) as! [String : Any]{
+                            let items = json["items"] as! NSDictionary
+                            let fileIds = items.allKeys
+                            self.fileIdArr = fileIds as? [String]
+                            self.myCollectionView.reloadData()
+                        }
+                    }
+                    else {
+                        print("*** Error: \(error.debugDescription)")
                     }
                 }
-                else {
-                    print("*** Error: \(error.debugDescription)")
-                }
+            } else {
+                print ("No files found.")
             }
-        } else {
-            print ("No files found.")
         }
     }
+    
     
     // Helper for showing an alert
     func showAlert(title : String, message: String) {
@@ -128,13 +84,6 @@ class PantallaMenu: UICollectionViewController, GIDSignInDelegate, GIDSignInUIDe
         present(alert, animated: true, completion: nil)
     }
     
-    @IBAction func signingOut(_ sender: UIButton) {
-        GIDSignIn.sharedInstance().signOut()
-        print("fuera")
-        // Unhide the sign in button
-        self.signInButton.isHidden = false
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         let itemSize = UIScreen.main.bounds.width/2 - 2
@@ -143,10 +92,9 @@ class PantallaMenu: UICollectionViewController, GIDSignInDelegate, GIDSignInUIDe
         layout.minimumInteritemSpacing = 2
         layout.minimumLineSpacing = 4
         myCollectionView.collectionViewLayout = layout
-        aiEspera.stopAnimating()
-        print(jsonArr)
+        listFiles()
+        print(platillos)
     }
-
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -178,8 +126,6 @@ class PantallaMenu: UICollectionViewController, GIDSignInDelegate, GIDSignInUIDe
     }
     
     @IBAction func verOrden(_ sender: Any) {
-        print(self.pedidoArr ?? "no hay pedido")
-        modeloBD.abrirBaseDatos()
         performSegue(withIdentifier: "seguePedido", sender: self)
     }
     
@@ -200,29 +146,16 @@ class PantallaMenu: UICollectionViewController, GIDSignInDelegate, GIDSignInUIDe
             let platilloVC = segue.destination as! PantallaPlatillo
             platilloVC.imagen = selectedImg!
             platilloVC.codigo = fileIdArr![selectedRow!]
+            platilloVC.myProtocol = self
             print(fileIdArr![selectedRow!])
             parseJSON(platilloVC)
         }
         else if segue.identifier == "seguePedido" {
-            let datos = segue.destination as! PantallaPedido
-            datos.baseDatos = baseDatos
-            let sqlConsulta = "SELECT * FROM COMIDAS"
-            var declaracion: OpaquePointer? = nil
-            if sqlite3_prepare_v2(baseDatos, sqlConsulta, -1, &declaracion, nil) == SQLITE_OK {
-                while sqlite3_step(declaracion) == SQLITE_ROW {
-                    let id = String.init(cString: sqlite3_column_text(declaracion, 0))
-                    let comida = String.init(cString: sqlite3_column_text(declaracion, 1))
-                    let precio = String.init(cString: sqlite3_column_text(declaracion, 2))
-                    print("\(id), \(comida), \(precio)")
-                    let currencyFormatter = NumberFormatter()
-                    currencyFormatter.usesGroupingSeparator = true
-                    currencyFormatter.numberStyle = NumberFormatter.Style.currencyAccounting
-                    currencyFormatter.locale = NSLocale.current
-                    let priceString = currencyFormatter.string(from: Double(precio+".00")! as NSNumber)
-                    datos.comidas!.append(comida)
-                    datos.precios!.append(precio)
-                }
-            }
+            let pedido = segue.destination as! PantallaPedido
+            pedido.platillosArr = platillos
+            pedido.preciosArr = costos
+            pedido.service = service!
+            pedido.nombre = nombre
         }
     }
     
@@ -231,18 +164,16 @@ class PantallaMenu: UICollectionViewController, GIDSignInDelegate, GIDSignInUIDe
     // MARK: UICollectionViewDataSource
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
         return fileIdArr!.count
     }
 
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         print("Img Arr ", imgArr!)
-        aiEspera.startAnimating()
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! myCell
         let fileId = fileIdArr![indexPath.row]
         let query = GTLRDriveQuery_FilesGet.queryForMedia(withFileId: fileId)
-        service.executeQuery(query) { (ticket, file, error) in
+        service!.executeQuery(query) { (ticket, file, error) in
             if error == nil {
                 let archivo = file as! GTLRDataObject
                 print("\n\n___Descargado: \(file.debugDescription)")
@@ -258,36 +189,16 @@ class PantallaMenu: UICollectionViewController, GIDSignInDelegate, GIDSignInUIDe
         return cell
     }
     
-    // MARK: UICollectionViewDelegate
+    // MARK: - Implementation of MyProtocol
     
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
+    func agregarPlatillo(platillo: String, precio: String, codigo: String) {
+        if !codigos.contains(codigo) {
+            codigos.append(codigo)
+            platillos.append(platillo)
+            costos.append(precio)
+        }
+        print(platillos)
+        print(costos)
     }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-    
-    }
-    */
 
 }
