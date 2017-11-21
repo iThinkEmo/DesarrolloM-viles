@@ -8,6 +8,10 @@
 import GoogleAPIClientForREST
 import UIKit
 
+protocol Protocolo {
+    func signOut()
+}
+
 class PantallaAdmin: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     public var service: GTLRDriveService? = nil
@@ -19,6 +23,8 @@ class PantallaAdmin: UIViewController, UIImagePickerControllerDelegate, UINaviga
     var jsonId = ""
     // Número de arhivos .json dentro de la carpeta dada
     var size : Int = 0
+    
+    var miProtocolo : Protocolo?
     
     // Outlets
     @IBOutlet weak var imgPlatillo: UIImageView!
@@ -41,7 +47,7 @@ class PantallaAdmin: UIViewController, UIImagePickerControllerDelegate, UINaviga
                 self.present(imgPickerController, animated: true, completion: nil)
             }
             else {
-                print("Camera not available")
+                //print("Camera not available")
             }
         }))
         
@@ -88,7 +94,7 @@ class PantallaAdmin: UIViewController, UIImagePickerControllerDelegate, UINaviga
     
     // Sube la foto a Drive para obtener el ID
     func subir(_ img : UIImage) {
-        print(service!.authorizer!)
+        //print(service!.authorizer!)
         let data = UIImagePNGRepresentation(img)!
         let folderId = "1Rtj5aRRBAl0kRg67NjqH3g9lghxLjGb3"
         
@@ -105,11 +111,11 @@ class PantallaAdmin: UIViewController, UIImagePickerControllerDelegate, UINaviga
             self.aiEspera.stopAnimating()
             if error == nil {
                 let f = file as! GTLRDrive_File
-                print("Subió: \(f.identifier!)")
+                //print("Subió: \(f.identifier!)")
                 self.btnSubirPlatillo.isUserInteractionEnabled = true
                 self.createJSON(f)
             } else {
-                print("Error: \(error.debugDescription)")
+                //print("Error: \(error.debugDescription)")
             }
         }
     }
@@ -132,7 +138,7 @@ class PantallaAdmin: UIViewController, UIImagePickerControllerDelegate, UINaviga
         else {
             aiEspera.startAnimating()
             let jsonStringPretty = JSONStringify(value: jsonObj as AnyObject, prettyPrinted: true)
-             print(jsonStringPretty)
+             //print(jsonStringPretty)
              showAlert(title: "Aviso", message: "Se subió el menú del día exitosamente.")
         }
     }
@@ -148,7 +154,7 @@ class PantallaAdmin: UIViewController, UIImagePickerControllerDelegate, UINaviga
                 }
             }
             catch {
-                print("error")
+                //print("error")
             }
         }
         return ""
@@ -185,9 +191,9 @@ class PantallaAdmin: UIViewController, UIImagePickerControllerDelegate, UINaviga
         self.aiEspera.stopAnimating()
         let f = file as! GTLRDrive_File
         if error == nil {
-            print("Subió: \(f.identifier!)")
+            //print("Subió: \(f.identifier!)")
         } else {
-            print("Error: \(error.debugDescription)")
+            //print("Error: \(error.debugDescription)")
         }
     }
     
@@ -211,7 +217,7 @@ class PantallaAdmin: UIViewController, UIImagePickerControllerDelegate, UINaviga
                 self.size = 0
             }
         }
-        print(size)
+        //print(size)
         return size
     }
     
@@ -283,12 +289,12 @@ class PantallaAdmin: UIViewController, UIImagePickerControllerDelegate, UINaviga
                         self.jsonArr[key] = ["nombre": nombre, "platillos": platillos, "horario": horario, "notas": notas, "total": total]
                     }
                     self.jsonObj["items"] = self.jsonArr
-                    print(self.jsonObj)
+                    //print(self.jsonObj)
                 }
                 self.performSegue(withIdentifier: "seguePedidos", sender: self)
             }
             else {
-                print("*** Error: \(error.debugDescription)")
+                //print("*** Error: \(error.debugDescription)")
             }
         }
     }
@@ -299,4 +305,9 @@ class PantallaAdmin: UIViewController, UIImagePickerControllerDelegate, UINaviga
         orden.service = service
     }
 
+    @IBAction func logout(_ sender: Any) {
+        miProtocolo?.signOut()
+        _ = navigationController?.popViewController(animated: true)
+    }
+    
 }

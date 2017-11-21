@@ -49,7 +49,7 @@ class PantallaCheckOut: UIViewController {
         let difference = NSCalendar.current.dateComponents(minute, from: date, to: someDateTime!)
         
         //Check if there is a gap of at least 30 mins
-        if difference.minute! > 30 {
+        if difference.minute! < 30 {
             showAlert(title: "Alerta", message: "Este horario ya no está disponible. Selecciona otro, por favor.")
         }
         else {
@@ -62,11 +62,11 @@ class PantallaCheckOut: UIViewController {
     }
     
     @IBAction func ordernarMenu(_ sender: Any) {
-        print(service!.hashValue)
-        print(nombre)
-        print(platillos)
-        print(horario)
-        print(tfNotas.text!)
+        //print(service!.hashValue)
+        //print(nombre)
+        //print(platillos)
+        //print(horario)
+        //print(tfNotas.text!)
         if horario == "" {
             showAlert(title: "Alerta", message: "Debes seleccionar un horario.")
         }
@@ -94,16 +94,16 @@ class PantallaCheckOut: UIViewController {
                     }
                     self.jsonArr[String(self.service!.hashValue)] = ["nombre": self.nombre, "platillos": self.platillos, "horario": self.horario, "notas": self.tfNotas.text!, "total": String(self.total)]
                     self.jsonObj["items"] = self.jsonArr
-                    print(self.jsonObj)
+                    //print(self.jsonObj)
                     let jsonStringPretty = self.JSONStringify(value: self.jsonObj as AnyObject, prettyPrinted: true)
-                    print(jsonStringPretty)
+                    //print(jsonStringPretty)
                 }
                 else {
-                    print("No se puede leer el json")
+                    //print("No se puede leer el json")
                 }
             }
             else {
-                print("*** Error: \(error.debugDescription)")
+                //print("*** Error: \(error.debugDescription)")
             }
         }
     }
@@ -119,7 +119,7 @@ class PantallaCheckOut: UIViewController {
                 }
             }
             catch {
-                print("error")
+                //print("error")
             }
         }
         return ""
@@ -144,10 +144,10 @@ class PantallaCheckOut: UIViewController {
     func executedQuery(_ file : Any?, _ error : Error?) {
         if error == nil {
             let f = file as! GTLRDrive_File
-            print("Subió: \(f.identifier!)")
+            //print("Subió: \(f.identifier!)")
             showAlert(title: "Aviso", message: "Todo listo. Te vemos a las \(horario).")
         } else {
-            print("Error: \(error.debugDescription)")
+            //print("Error: \(error.debugDescription)")
         }
     }
     

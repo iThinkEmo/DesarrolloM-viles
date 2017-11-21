@@ -10,7 +10,7 @@ import GoogleAPIClientForREST
 import GoogleSignIn
 import UIKit
 
-class PantallaLogin: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
+class PantallaLogin: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate, MiProtocolo, Protocolo {
     
     var nombre : String = ""
     
@@ -39,7 +39,6 @@ class PantallaLogin: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
         } else {
             let email = user.profile.email
             nombre = user.profile.name
-            print(nombre)
             if (email == "a01169073@itesm.mx" || email == "rauljimenez20202020@gmail.com") {
                 self.service.authorizer = user.authentication.fetcherAuthorizer()
                 performSegue(withIdentifier: "segueAdmin", sender: self)
@@ -68,14 +67,10 @@ class PantallaLogin: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
         present(alert, animated: true, completion: nil)
     }
     
-    @IBAction func signingOut(_ sender: UIButton) {
-        GIDSignIn.sharedInstance().signOut()
-        print("fuera")
-        // Unhide the sign in button
-        self.signInButton.isHidden = false
+    @IBAction func acercaDe(_ sender: Any) {
+        performSegue(withIdentifier: "segueAbout", sender: self)
     }
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -96,12 +91,19 @@ class PantallaLogin: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
         if segue.identifier == "segueAdmin" {
             let adminVC = segue.destination as! PantallaAdmin
             adminVC.service = self.service
+            adminVC.miProtocolo = self
         }
         if segue.identifier == "segueMenu" {
             let menuVC = segue.destination as! PantallaMenu
             menuVC.service = self.service
             menuVC.nombre = nombre
+            menuVC.miProtocolo = self
         }
+    }
+    
+    func signOut() {
+        GIDSignIn.sharedInstance().signOut()
+        self.signInButton.isHidden = false
     }
     
 

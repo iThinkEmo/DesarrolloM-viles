@@ -9,6 +9,10 @@
 import GoogleAPIClientForREST
 import UIKit
 
+protocol MiProtocolo {
+    func signOut()
+}
+
 class PantallaMenu: UICollectionViewController, MyProtocol {
 
     public var service: GTLRDriveService? = nil
@@ -21,6 +25,8 @@ class PantallaMenu: UICollectionViewController, MyProtocol {
     var selectedRow: Int? = 0
     var selectedImg: UIImage? = UIImage()
     var archivoMenu : GTLRDataObject? = nil
+    
+    var miProtocolo : MiProtocolo?
     
     // Variables para el Objeto y Arreglo JSON
     public var jsonObj = [String: Any]()
@@ -59,11 +65,11 @@ class PantallaMenu: UICollectionViewController, MyProtocol {
                         }
                     }
                     else {
-                        print("*** Error: \(error.debugDescription)")
+                        //print("*** Error: \(error.debugDescription)")
                     }
                 }
             } else {
-                print ("No files found.")
+                //print ("No files found.")
             }
         }
     }
@@ -94,7 +100,7 @@ class PantallaMenu: UICollectionViewController, MyProtocol {
         layout.minimumLineSpacing = 4
         myCollectionView.collectionViewLayout = layout
         listFiles()
-        print(platillos)
+        //print(platillos)
     }
 
     override func didReceiveMemoryWarning() {
@@ -111,10 +117,10 @@ class PantallaMenu: UICollectionViewController, MyProtocol {
             let title = item["title"] ?? ""
             let desc = item["description"] ?? ""
             let price = item["price"] ?? ""
-            print("Titulo: \(title)")
-            print("Descripción: \(desc)")
-            print("Costo: \(price)")
-            print("\n")
+            //print("Titulo: \(title)")
+            //print("Descripción: \(desc)")
+            //print("Costo: \(price)")
+            //print("\n")
             platilloVC.titulo = title as? String
             platilloVC.descripcion = desc as? String
             platilloVC.costo = price as? String
@@ -158,7 +164,7 @@ class PantallaMenu: UICollectionViewController, MyProtocol {
             platilloVC.imagen = selectedImg!
             platilloVC.codigo = fileIdArr![selectedRow!]
             platilloVC.myProtocol = self
-            print(fileIdArr![selectedRow!])
+            //print(fileIdArr![selectedRow!])
             parseJSON(platilloVC)
         }
         else if segue.identifier == "seguePedido" {
@@ -181,24 +187,30 @@ class PantallaMenu: UICollectionViewController, MyProtocol {
 
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("Img Arr ", imgArr!)
+        //print("Img Arr ", imgArr!)
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! myCell
         let fileId = fileIdArr![indexPath.row]
         let query = GTLRDriveQuery_FilesGet.queryForMedia(withFileId: fileId)
         service!.executeQuery(query) { (ticket, file, error) in
             if error == nil {
                 let archivo = file as! GTLRDataObject
-                print("\n\n___Descargado: \(file.debugDescription)")
+                //print("\n\n___Descargado: \(file.debugDescription)")
                 let img = UIImage(data: archivo.data)
                 self.imgArr!.append(img!)
                 cell.imgCell.image = img!
                 self.aiEspera.stopAnimating()
             }
             else {
-                print("*** Error: \(error.debugDescription)")
+                //print("*** Error: \(error.debugDescription)")
             }
         }
         return cell
+    }
+    
+    
+    @IBAction func logout(_ sender: Any) {
+        miProtocolo?.signOut()
+        _ = navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Implementation of MyProtocol
@@ -210,8 +222,6 @@ class PantallaMenu: UICollectionViewController, MyProtocol {
             costos.append(precio)
             precios.append(costo)
         }
-        print(platillos)
-        print(costos)
     }
 
 }

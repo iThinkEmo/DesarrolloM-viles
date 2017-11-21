@@ -38,7 +38,7 @@ class PantallaOrdenes: UITableViewController {
                 }
             }
             else {
-                print("*** Error: \(error.debugDescription)")
+                //print("*** Error: \(error.debugDescription)")
             }
         }
     }
@@ -87,7 +87,7 @@ class PantallaOrdenes: UITableViewController {
         jsonObjUpdate["items"] = itemsArr
         //print(jsonObjUpdate,"\n")
         let jsonStringPretty = JSONStringify(value: jsonObjUpdate as AnyObject, prettyPrinted: true)
-        print(jsonStringPretty)
+        //print(jsonStringPretty)
     }
     
     func JSONStringify(value: AnyObject,prettyPrinted:Bool = false) -> String {
@@ -101,7 +101,7 @@ class PantallaOrdenes: UITableViewController {
                 }
             }
             catch {
-                print("error")
+                //print("error")
             }
         }
         return ""
@@ -126,9 +126,9 @@ class PantallaOrdenes: UITableViewController {
     func executedQuery(_ file : Any?, _ error : Error?) {
         if error == nil {
             let f = file as! GTLRDrive_File
-            print("Subió: \(f.identifier!)")
+            //print("Subió: \(f.identifier!)")
         } else {
-            print("Error: \(error.debugDescription)")
+            //print("Error: \(error.debugDescription)")
         }
     }
     
