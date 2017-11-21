@@ -65,10 +65,11 @@ class PantallaOrdenes: UITableViewController {
         let pedido = jsonArr?[indexPath.row] as! NSDictionary
         let nombre = pedido["nombre"]
         let notas = pedido["notas"]
+        let total = pedido["total"]
         let horario = pedido["horario"]
         let platillos = pedido["platillos"] as! NSArray
         let comida = platillos.componentsJoined(by: ", ")
-        cell.tvComida.text = "\(nombre!) pidió \(comida) a las \(horario!). Notas: \(notas!)"
+        cell.tvComida.text = "\(nombre!) pidió \(comida) a las \(horario!). Notas: \(notas!). Total: $\(total!).00"
         return cell
     }
     

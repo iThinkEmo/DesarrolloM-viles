@@ -26,6 +26,7 @@ class PantallaMenu: UICollectionViewController, MyProtocol {
     public var jsonObj = [String: Any]()
     public var platillos = [String]()
     public var costos = [String]()
+    public var precios = [Int]()
     public var codigos = [String]()
     
     @IBOutlet weak var aiEspera: UIActivityIndicatorView!
@@ -122,11 +123,21 @@ class PantallaMenu: UICollectionViewController, MyProtocol {
     
     
     @IBAction func rastrearOrden(_ sender: UIButton) {
-        performSegue(withIdentifier: "segueMapa", sender: self)
+        if platillos.isEmpty {
+            showAlert(title: "Alerta", message: "No has seleccionado ningún platillo del menú.")
+        }
+        else {
+            performSegue(withIdentifier: "segueMapa", sender: self)
+        }
     }
     
     @IBAction func verOrden(_ sender: Any) {
-        performSegue(withIdentifier: "seguePedido", sender: self)
+        if platillos.isEmpty {
+            showAlert(title: "Alerta", message: "No has seleccionado ningún platillo del menú.")
+        }
+        else {
+            performSegue(withIdentifier: "seguePedido", sender: self)
+        }
     }
     
     // Return selected image
@@ -154,6 +165,7 @@ class PantallaMenu: UICollectionViewController, MyProtocol {
             let pedido = segue.destination as! PantallaPedido
             pedido.platillosArr = platillos
             pedido.preciosArr = costos
+            pedido.costosArr = precios
             pedido.service = service!
             pedido.nombre = nombre
         }
@@ -191,11 +203,12 @@ class PantallaMenu: UICollectionViewController, MyProtocol {
     
     // MARK: - Implementation of MyProtocol
     
-    func agregarPlatillo(platillo: String, precio: String, codigo: String) {
+    func agregarPlatillo(platillo: String, precio: String, costo: Int, codigo: String) {
         if !codigos.contains(codigo) {
             codigos.append(codigo)
             platillos.append(platillo)
             costos.append(precio)
+            precios.append(costo)
         }
         print(platillos)
         print(costos)

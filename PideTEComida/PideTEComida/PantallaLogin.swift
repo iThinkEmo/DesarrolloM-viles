@@ -40,7 +40,7 @@ class PantallaLogin: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
             let email = user.profile.email
             nombre = user.profile.name
             print(nombre)
-            if (email == "a01169073@itesm.mx") {
+            if (email == "a01169073@itesm.mx" || email == "rauljimenez20202020@gmail.com") {
                 self.service.authorizer = user.authentication.fetcherAuthorizer()
                 performSegue(withIdentifier: "segueAdmin", sender: self)
             }

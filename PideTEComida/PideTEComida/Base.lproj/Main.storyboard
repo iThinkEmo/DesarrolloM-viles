@@ -525,11 +525,6 @@
                                     <action selector="ordernarMenu:" destination="Zhv-vj-HrJ" eventType="touchUpInside" id="rhR-ro-lyp"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7FE-IG-gxS">
-                                <rect key="frame" x="16" y="680" width="78" height="36"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="Cancelar"/>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notas:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2ah-MJ-bH4">
                                 <rect key="frame" x="16" y="613.33333333333337" width="382" height="20.333333333333258"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -550,10 +545,8 @@
                         <constraints>
                             <constraint firstItem="por-JV-McM" firstAttribute="leading" secondItem="3ph-1L-6xz" secondAttribute="leading" constant="16" id="620-EL-GBj"/>
                             <constraint firstItem="RUp-Mw-Ul8" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="RIN-ps-4Y5" secondAttribute="leading" constant="20" symbolic="YES" id="E7N-rF-vlT"/>
-                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="7FE-IG-gxS" secondAttribute="trailing" constant="20" symbolic="YES" id="IUW-5A-4hq"/>
                             <constraint firstItem="por-JV-McM" firstAttribute="top" secondItem="HM7-jI-cbC" secondAttribute="bottom" constant="8" id="KGA-oY-JwF"/>
                             <constraint firstItem="3ph-1L-6xz" firstAttribute="trailing" secondItem="2ah-MJ-bH4" secondAttribute="trailing" constant="16" id="L90-zz-pR2"/>
-                            <constraint firstItem="7FE-IG-gxS" firstAttribute="leading" secondItem="3ph-1L-6xz" secondAttribute="leading" constant="16" id="NwY-Kg-Slp"/>
                             <constraint firstItem="xbE-LQ-i6W" firstAttribute="leading" secondItem="3ph-1L-6xz" secondAttribute="leading" constant="16" id="P1e-z2-oCQ"/>
                             <constraint firstItem="3ph-1L-6xz" firstAttribute="trailing" secondItem="xbE-LQ-i6W" secondAttribute="trailing" constant="16" id="S76-sx-c2E"/>
                             <constraint firstItem="3ph-1L-6xz" firstAttribute="bottom" secondItem="btn-2k-YPk" secondAttribute="bottom" constant="153" id="Sdp-sd-rvZ"/>
@@ -561,7 +554,6 @@
                             <constraint firstItem="3ph-1L-6xz" firstAttribute="bottom" secondItem="xbE-LQ-i6W" secondAttribute="bottom" constant="64" id="X5e-9H-jrd"/>
                             <constraint firstItem="3ph-1L-6xz" firstAttribute="trailing" secondItem="por-JV-McM" secondAttribute="trailing" constant="16" id="Yz3-5c-Wek"/>
                             <constraint firstItem="xbE-LQ-i6W" firstAttribute="top" secondItem="2ah-MJ-bH4" secondAttribute="bottom" constant="8.5" id="bwJ-u4-K8Y"/>
-                            <constraint firstItem="80k-W4-7ju" firstAttribute="top" secondItem="7FE-IG-gxS" secondAttribute="bottom" constant="20" id="csT-Gf-Gsh"/>
                             <constraint firstItem="btn-2k-YPk" firstAttribute="top" secondItem="3ph-1L-6xz" secondAttribute="top" constant="63" id="lSS-Ic-Kdr"/>
                             <constraint firstItem="3ph-1L-6xz" firstAttribute="trailing" secondItem="RUp-Mw-Ul8" secondAttribute="trailing" constant="16" id="s4C-aV-gcK"/>
                             <constraint firstItem="btn-2k-YPk" firstAttribute="leading" secondItem="3ph-1L-6xz" secondAttribute="leading" constant="70" id="ue0-4R-PHz"/>
@@ -571,6 +563,7 @@
                         <viewLayoutGuide key="safeArea" id="3ph-1L-6xz"/>
                     </view>
                     <connections>
+                        <outlet property="btnOrdenar" destination="RUp-Mw-Ul8" id="9CP-qe-bDH"/>
                         <outlet property="tfNotas" destination="xbE-LQ-i6W" id="ul1-Q8-GW1"/>
                         <outletCollection property="btnTime" destination="WYk-2P-XGd" collectionClass="NSMutableArray" id="nea-OM-8uF"/>
                         <outletCollection property="btnTime" destination="H07-5a-Qos" collectionClass="NSMutableArray" id="k6l-UV-YZh"/>

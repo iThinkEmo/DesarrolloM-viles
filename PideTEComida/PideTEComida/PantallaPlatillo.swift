@@ -9,7 +9,7 @@
 import UIKit
 
 protocol MyProtocol {
-    func agregarPlatillo(platillo: String, precio: String, codigo: String)
+    func agregarPlatillo(platillo: String, precio: String, costo: Int, codigo: String)
 }
 
 class PantallaPlatillo: UIViewController, UINavigationControllerDelegate {
@@ -56,7 +56,7 @@ class PantallaPlatillo: UIViewController, UINavigationControllerDelegate {
         currencyFormatter.numberStyle = NumberFormatter.Style.currencyAccounting
         currencyFormatter.locale = NSLocale.current
         let priceString = currencyFormatter.string(from: Double(costo!+".00")! as NSNumber)
-        myProtocol?.agregarPlatillo(platillo: titulo!, precio: priceString!, codigo: codigo!)
+        myProtocol?.agregarPlatillo(platillo: titulo!, precio: priceString!, costo: Int(costo!)!, codigo: codigo!)
     }
     
     // Helper for showing an alert

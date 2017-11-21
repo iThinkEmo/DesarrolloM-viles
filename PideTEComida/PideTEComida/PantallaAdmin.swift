@@ -279,7 +279,8 @@ class PantallaAdmin: UIViewController, UIImagePickerControllerDelegate, UINaviga
                         let platillos = item["platillos"] as! NSArray
                         let horario = item["horario"] as! String
                         let notas = item["notas"] as! String
-                        self.jsonArr[key] = ["nombre": nombre, "platillos": platillos, "horario": horario, "notas": notas]
+                        let total = item["total"] ?? "0"
+                        self.jsonArr[key] = ["nombre": nombre, "platillos": platillos, "horario": horario, "notas": notas, "total": total]
                     }
                     self.jsonObj["items"] = self.jsonArr
                     print(self.jsonObj)

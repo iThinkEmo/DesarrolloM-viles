@@ -15,12 +15,14 @@ class PantallaCheckOut: UIViewController {
     var nombre: String = ""
     var platillos = [String]()
     var horario: String = ""
+    var total: Int = 0
     
     // Variables para el Objeto y Arreglo JSON
     var jsonObj = [String: Any]()
     var jsonArr = [String: [String: Any]]()
     
     @IBOutlet weak var tfNotas: UITextField!
+    @IBOutlet weak var btnOrdenar: UIButton!
     
     @IBOutlet var btnTime: [UIButton]!
     
@@ -47,7 +49,7 @@ class PantallaCheckOut: UIViewController {
         let difference = NSCalendar.current.dateComponents(minute, from: date, to: someDateTime!)
         
         //Check if there is a gap of at least 30 mins
-        if difference.minute! < 30 {
+        if difference.minute! > 30 {
             showAlert(title: "Alerta", message: "Este horario ya no está disponible. Selecciona otro, por favor.")
         }
         else {
@@ -65,7 +67,12 @@ class PantallaCheckOut: UIViewController {
         print(platillos)
         print(horario)
         print(tfNotas.text!)
-        updateJSON()
+        if horario == "" {
+            showAlert(title: "Alerta", message: "Debes seleccionar un horario.")
+        }
+        else {
+            updateJSON()
+        }
     }
     
     func updateJSON() {
@@ -82,13 +89,17 @@ class PantallaCheckOut: UIViewController {
                         let platillos = item["platillos"] as! NSArray
                         let horario = item["horario"] as! String
                         let notas = item["notas"] as! String
-                        self.jsonArr[key] = ["nombre": nombre, "platillos": platillos, "horario": horario, "notas": notas]
+                        let total = item["total"] ?? "0"
+                        self.jsonArr[key] = ["nombre": nombre, "platillos": platillos, "horario": horario, "notas": notas, "total": total]
                     }
-                    self.jsonArr[String(self.service!.hashValue)] = ["nombre": self.nombre, "platillos": self.platillos, "horario": self.horario, "notas": self.tfNotas.text!]
+                    self.jsonArr[String(self.service!.hashValue)] = ["nombre": self.nombre, "platillos": self.platillos, "horario": self.horario, "notas": self.tfNotas.text!, "total": String(self.total)]
                     self.jsonObj["items"] = self.jsonArr
                     print(self.jsonObj)
                     let jsonStringPretty = self.JSONStringify(value: self.jsonObj as AnyObject, prettyPrinted: true)
                     print(jsonStringPretty)
+                }
+                else {
+                    print("No se puede leer el json")
                 }
             }
             else {
@@ -156,9 +167,25 @@ class PantallaCheckOut: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        tfNotas.resignFirstResponder()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        btnOrdenar.setTitle("Ordenar  $\(total).00", for: .normal)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(sender:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(sender:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    // MARK: - Fixing Keyboard Input
+    
+    @objc func keyboardWillShow(sender: NSNotification) {
+        self.view.frame.origin.y = -250 // Move view 250 points upward
+    }
+    
+    @objc func keyboardWillHide(sender: NSNotification) {
+        self.view.frame.origin.y = 0 // Move view to original position
     }
 
     override func didReceiveMemoryWarning() {

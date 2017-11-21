@@ -16,6 +16,8 @@ class PantallaPedido: UITableViewController {
 
     var platillosArr = [String]()
     var preciosArr = [String]()
+    var costosArr = [Int]()
+    var total : Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +54,11 @@ class PantallaPedido: UITableViewController {
         checkout.service = service!
         checkout.nombre = nombre
         checkout.platillos = platillosArr
+        total = 0
+        for precio in costosArr {
+            total += precio
+        }
+        checkout.total = total
     }
     
 
